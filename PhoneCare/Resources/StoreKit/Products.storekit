@@ -1,0 +1,107 @@
+{
+  "identifier" : "PhoneCareProducts",
+  "nonRenewableSubscriptions" : [],
+  "products" : [],
+  "settings" : {
+    "_applicationInternalID" : "0",
+    "_developerTeamID" : "",
+    "_lastSynchronizedDate" : ""
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "phonecare_premium",
+      "localizations" : [
+        {
+          "description" : "Unlock all PhoneCare premium features",
+          "displayName" : "PhoneCare Premium",
+          "locale" : "en_US"
+        }
+      ],
+      "name" : "PhoneCare Premium",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "weekly_premium",
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "internalID" : "weekly_trial",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Full access to all features, billed weekly",
+              "displayName" : "Weekly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.phonecare.premium.weekly",
+          "recurringSubscriptionPeriod" : "P1W",
+          "referenceName" : "Weekly Premium",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "2.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "monthly_premium",
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "internalID" : "monthly_trial",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Full access to all features, billed monthly",
+              "displayName" : "Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.phonecare.premium.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Monthly Premium",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "19.99",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "annual_premium",
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "internalID" : "annual_trial",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Full access to all features, billed annually. Best value!",
+              "displayName" : "Annual",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.phonecare.premium.annual",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Annual Premium",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

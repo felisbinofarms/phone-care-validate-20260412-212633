@@ -1,0 +1,121 @@
+import SwiftUI
+
+struct PrivacyPermissionInfo: Identifiable {
+    let id: String
+    let type: PermissionType
+    let status: PermissionStatus
+    let statusColor: Color
+    let statusText: String
+    let icon: String
+}
+
+@MainActor
+@Observable
+final class PrivacyViewModel {
+
+    // MARK: - State
+
+    private(set) var privacyScore: Int = 0
+    private(set) var permissions: [PrivacyPermissionInfo] = []
+    private(set) var isLoading: Bool = false
+    var selectedPermission: PermissionType?
+
+    // MARK: - Load
+
+    func load(permissionManager: PermissionManager) {
+        isLoading = true
+
+        Task {
+            await permissionManager.checkAllStatuses()
+
+            var infos: [PrivacyPermissionInfo] = []
+            for type in PermissionType.allCases {
+                let status = permissionManager.status(for: type)
+                infos.append(PrivacyPermissionInfo(
+                    id: type.rawValue,
+                    type: type,
+                    status: status,
+                    statusColor: colorForStatus(status),
+                    statusText: textForStatus(status),
+                    icon: iconForPermission(type)
+                ))
+            }
+
+            permissions = infos
+            privacyScore = computeScore(permissions: infos)
+            isLoading = false
+        }
+    }
+
+    // MARK: - Score
+
+    private func computeScore(permissions: [PrivacyPermissionInfo]) -> Int {
+        guard !permissions.isEmpty else { return 100 }
+        let appropriate = permissions.filter {
+            $0.status == .denied || $0.status == .notDetermined || $0.status == .limited
+        }.count
+        // Higher score = fewer apps have full access (more restrictive is "better")
+        let ratio = Double(appropriate) / Double(permissions.count) * 100
+        return max(0, min(100, Int(ratio.rounded())))
+    }
+
+    // MARK: - Helpers
+
+    private func colorForStatus(_ status: PermissionStatus) -> Color {
+        switch status {
+        case .authorized:     return .pcAccent
+        case .denied:         return .pcTextSecondary
+        case .notDetermined:  return .pcTextSecondary
+        case .restricted:     return .pcTextSecondary
+        case .limited:        return .pcAccent
+        }
+    }
+
+    private func textForStatus(_ status: PermissionStatus) -> String {
+        switch status {
+        case .authorized:     return "Allowed"
+        case .denied:         return "Denied"
+        case .notDetermined:  return "Not Set"
+        case .restricted:     return "Restricted"
+        case .limited:        return "Limited"
+        }
+    }
+
+    func iconForPermission(_ type: PermissionType) -> String {
+        switch type {
+        case .camera:       return "camera.fill"
+        case .microphone:   return "mic.fill"
+        case .location:     return "location.fill"
+        case .contacts:     return "person.crop.circle.fill"
+        case .photos:       return "photo.fill"
+        case .calendar:     return "calendar"
+        case .reminders:    return "checklist"
+        case .bluetooth:    return "wave.3.right"
+        case .localNetwork: return "network"
+        case .health:       return "heart.fill"
+        case .tracking:     return "hand.raised.fill"
+        }
+    }
+
+    var scoreSummary: String {
+        if privacyScore >= 76 {
+            return "Your privacy settings look great."
+        } else if privacyScore >= 51 {
+            return "Your privacy is in good shape. A few settings could be reviewed."
+        } else {
+            return "Some of your privacy settings could be tightened up."
+        }
+    }
+
+    var authorizedCount: Int {
+        permissions.filter { $0.status == .authorized }.count
+    }
+
+    var deniedCount: Int {
+        permissions.filter { $0.status == .denied }.count
+    }
+
+    var notSetCount: Int {
+        permissions.filter { $0.status == .notDetermined }.count
+    }
+}

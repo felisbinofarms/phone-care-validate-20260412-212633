@@ -105,6 +105,20 @@ Flat tab bar with 5 tabs (no hamburger menus, no drawers):
 9. F9: Paywall & Subscription (StoreKit 2)
 10. F10: Settings & Subscription Management
 
+## App Store Review Compliance (from docs/apple-review-docs/)
+- NO placeholder content, "coming soon", broken links, or dead-end screens
+- All permission `NSUsageDescription` strings must be clear and specific
+- Privacy nutrition labels must be 100% accurate (we collect zero user data)
+- StoreKit 2: clear pricing, renewal terms, cancellation info displayed before purchase
+- "Restore Purchases" button must be easy to find (in Settings + onboarding)
+- Trial-to-paid transitions must be transparent (7-day trial, clear what happens after)
+- NO private/undocumented APIs (battery health max capacity NOT available via public API — deep link to Settings instead)
+- NO AI data sharing (we're 100% on-device — no consent modal needed)
+- Dynamic Type, VoiceOver, Dark Mode are active review criteria
+- Screenshots must match real app UI exactly
+- Build with latest SDK before submission
+- Provide sandbox test account with active subscription for reviewer
+
 ## Development Workflow
 - Use plan mode for complex features before implementing
 - Break features into small, testable increments

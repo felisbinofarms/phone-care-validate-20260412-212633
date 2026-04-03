@@ -36,7 +36,7 @@ struct ContactsView: View {
                 UndoToastView(
                     itemCount: viewModel.lastMergedCount,
                     countdownDuration: 30,
-                    onUndo: { viewModel.undoMerge() },
+                    onUndo: { viewModel.undoMerge(dataManager: dataManager) },
                     onDismiss: { viewModel.showUndoToast = false }
                 )
                 .padding(.bottom, PCTheme.Spacing.xxl)
@@ -47,12 +47,19 @@ struct ContactsView: View {
         .sheet(item: $selectedGroup) { group in
             MergeComparisonView(
                 group: group,
-                onMerge: { viewModel.mergeGroup(group) },
+                onMerge: { viewModel.mergeGroup(group, dataManager: dataManager) },
                 onCancel: { selectedGroup = nil }
             )
         }
         .sheet(isPresented: $showPaywall) {
             PaywallBottomSheet()
+        }
+        .alert(item: $viewModel.alertInfo) { alert in
+            Alert(
+                title: Text(alert.title),
+                message: Text(alert.message),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
 
@@ -92,9 +99,10 @@ struct ContactsView: View {
                             showPaywall = true
                             return
                         }
-                        viewModel.mergeAll()
+                        viewModel.mergeAll(dataManager: dataManager)
                     }
                     .secondaryStyle()
+                    .disabled(viewModel.isMerging)
                     .accessibilityHint("Automatically merge all duplicate contacts")
                 }
             }
@@ -183,9 +191,10 @@ struct ContactsView: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                 Button("Scan Contacts") {
-                    viewModel.startScan()
+                    viewModel.startScan(dataManager: dataManager)
                 }
                 .primaryCTAStyle()
+                .disabled(viewModel.isScanning || viewModel.isMerging)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, PCTheme.Spacing.md)

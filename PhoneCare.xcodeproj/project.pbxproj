@@ -93,6 +93,7 @@
 		E9EEDC76A0039044F7C2A6FF /* SubscriptionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816AA6D8266FFBD2D7A7E9A6 /* SubscriptionStatusView.swift */; };
 		F0CEE4F2A8218B0CD205DCDA /* AppearancePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F317FF12D3FE56A3E0B743 /* AppearancePickerView.swift */; };
 		F9984E55E1051A156A81C805 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8081E4C683CBAEB5AE60099F /* WelcomeView.swift */; };
+		5A0EF8F1646B4388B53CC7D4 /* HonestAlternativeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE48224FDEF4C669C3D1A5D /* HonestAlternativeView.swift */; };
 		FA0DA3A8EF2351949C14917F /* CleanupUndoManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B9BB084D9BA22E1C6942E1 /* CleanupUndoManagerTests.swift */; };
 		FB68EEDBF1DAE5277B768CEA /* PhotoAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E92DF13EC64840FB8C8CE2 /* PhotoAnalyzer.swift */; };
 		FD9EC8A533649C055121D6F8 /* TechSavvyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87EC69F4596AE32D7CE280A /* TechSavvyView.swift */; };
@@ -163,6 +164,7 @@
 		78C468D1052AA3100C78CECE /* ProductCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCardView.swift; sourceTree = "<group>"; };
 		80490BF999FFFAF8AA093E1D /* HealthScoreCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthScoreCalculatorTests.swift; sourceTree = "<group>"; };
 		8081E4C683CBAEB5AE60099F /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		4EE48224FDEF4C669C3D1A5D /* HonestAlternativeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HonestAlternativeView.swift; sourceTree = "<group>"; };
 		80F519C15DFEE46180A918D3 /* StorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageView.swift; sourceTree = "<group>"; };
 		816AA6D8266FFBD2D7A7E9A6 /* SubscriptionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionStatusView.swift; sourceTree = "<group>"; };
 		82F317FF12D3FE56A3E0B743 /* AppearancePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePickerView.swift; sourceTree = "<group>"; };
@@ -495,6 +497,7 @@
 				B79E24B29290F9E33BA5AF89 /* PaywallOnboardingView.swift */,
 				6AB0AFF854419C63FD675BA0 /* PermissionPrimingView.swift */,
 				3845AB4CF4813237E6B9BCE8 /* PersonalPlanView.swift */,
+				4EE48224FDEF4C669C3D1A5D /* HonestAlternativeView.swift */,
 				F43849488C3D494A69C847A1 /* PhoneFeelingView.swift */,
 				E2771A6505F8469804D029B7 /* ResultsReportView.swift */,
 				F87EC69F4596AE32D7CE280A /* TechSavvyView.swift */,
@@ -769,6 +772,7 @@
 				024CFF148C1A24371574B3C5 /* ViewModifiers.swift in Sources */,
 				DA9A739122EED219624D61FC /* WelcomeHomeView.swift in Sources */,
 				F9984E55E1051A156A81C805 /* WelcomeView.swift in Sources */,
+				5A0EF8F1646B4388B53CC7D4 /* HonestAlternativeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

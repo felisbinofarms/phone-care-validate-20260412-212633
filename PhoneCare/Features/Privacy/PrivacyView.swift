@@ -28,6 +28,8 @@ struct PrivacyView: View {
         .onAppear {
             viewModel.load(permissionManager: permissionManager)
         }
+        // Privacy share prompt removed — no user-initiated "cleanup win" moment here.
+        // Privacy sharing is handled via CompletionCelebrationView in the Review Privacy guided flow.
     }
 
     // MARK: - Score

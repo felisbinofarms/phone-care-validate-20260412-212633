@@ -25,6 +25,7 @@
 		24BF08D651ED1012D190B89D /* PrivacyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0891F0670FD04238CED154F0 /* PrivacyViewModel.swift */; };
 		2A96FE4DEFF1AEA0926B7468 /* AssetThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CDA2B55CEB2A69448084F /* AssetThumbnailView.swift */; };
 		2D0DA25D99BA7AB33D44FE30 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464A3CD0A7B27402566F16A7 /* SettingsView.swift */; };
+		32211FBE895D61B50F806CA1 /* SharePromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B05C3375C40081A2D3FD03 /* SharePromptView.swift */; };
 		38A6261514755CA491382D0C /* OnboardingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3066D2A966543D6229BD4 /* OnboardingHeaderView.swift */; };
 		3D70035268709273C5033FFA /* PhoneCareUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C5BCDB9A09D856BB75906C /* PhoneCareUITests.swift */; };
 		411B3CE1AD52D712B1372BC2 /* ScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BB2671EA6061D9189450A3 /* ScanResult.swift */; };
@@ -75,6 +76,7 @@
 		C87E1465928F5D30172BA6E8 /* PhotoGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B81E10D96703A710E81F14 /* PhotoGridView.swift */; };
 		CBDAF5AE8DFD6125F570040C /* BatchDeleteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA142B451ABF9EF7009385DD /* BatchDeleteSheet.swift */; };
 		CF2CD5A8A1526E518C51497D /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D69FDFB5E266EAFCE59B3 /* MainTabView.swift */; };
+		CF95CB6CCCF2B2BDEA170AC4 /* SharePromptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B84939C68B208A948D9BEB4 /* SharePromptManager.swift */; };
 		D098CB89B63AEB0506977EF1 /* ReviewPrivacyFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC67220DD3CB9F68BBEE296C /* ReviewPrivacyFlow.swift */; };
 		D0C2981BB595190424728ACD /* BatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49572D539EB40EE859217DBD /* BatteryView.swift */; };
 		D2457099D7E87EEADF43BA16 /* PaywallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0EF84637556BC29F2ED598 /* PaywallViewModel.swift */; };
@@ -149,6 +151,7 @@
 		464A3CD0A7B27402566F16A7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		49572D539EB40EE859217DBD /* BatteryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryView.swift; sourceTree = "<group>"; };
 		4B58DC50E9F96EBCD83A482E /* PhoneCare.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PhoneCare.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B84939C68B208A948D9BEB4 /* SharePromptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePromptManager.swift; sourceTree = "<group>"; };
 		4BFCD9A519DF06819F340EBE /* FlowStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowStepView.swift; sourceTree = "<group>"; };
 		4E2CDA2B55CEB2A69448084F /* AssetThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetThumbnailView.swift; sourceTree = "<group>"; };
 		50162EBD28F4204154C51AE5 /* PhotoScanCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoScanCache.swift; sourceTree = "<group>"; };
@@ -204,6 +207,7 @@
 		D6C917DB0C6FD77868FADFCA /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		DA142B451ABF9EF7009385DD /* BatchDeleteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchDeleteSheet.swift; sourceTree = "<group>"; };
 		DAC27BB4238C94AC3D2AC2D4 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		E0B05C3375C40081A2D3FD03 /* SharePromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePromptView.swift; sourceTree = "<group>"; };
 		E20FA7F83762C51B4B146FD2 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		E2771A6505F8469804D029B7 /* ResultsReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsReportView.swift; sourceTree = "<group>"; };
 		E6773776308688DAD3CEF98C /* BatteryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryMonitor.swift; sourceTree = "<group>"; };
@@ -231,6 +235,15 @@
 				5F263E165790D08368354181 /* UndoToastView.swift */,
 			);
 			path = Photos;
+			sourceTree = "<group>";
+		};
+		12BB52DD53CA27A8F96F1602 /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				4B84939C68B208A948D9BEB4 /* SharePromptManager.swift */,
+				E0B05C3375C40081A2D3FD03 /* SharePromptView.swift */,
+			);
+			path = Share;
 			sourceTree = "<group>";
 		};
 		20828C12931A8A369544A560 /* Dashboard */ = {
@@ -459,6 +472,7 @@
 				6BCA32D81CFFDBC010FCE8A0 /* Privacy */,
 				6DCED1B6960E0422AFF1EE2D /* ScreenshotCleanup */,
 				EB3F50E9F0C66DCAF7ECB688 /* Settings */,
+				12BB52DD53CA27A8F96F1602 /* Share */,
 				405106A89C2BF43688DCA583 /* SiriShortcuts */,
 				349194B7DB75269DB6D04BE4 /* Storage */,
 				3423E003BF29E94779E35FE0 /* VideoCompressor */,
@@ -761,6 +775,8 @@
 				411B3CE1AD52D712B1372BC2 /* ScanResult.swift in Sources */,
 				2D0DA25D99BA7AB33D44FE30 /* SettingsView.swift in Sources */,
 				8B0A25B14181A4C51D12D6EB /* SettingsViewModel.swift in Sources */,
+				CF95CB6CCCF2B2BDEA170AC4 /* SharePromptManager.swift in Sources */,
+				32211FBE895D61B50F806CA1 /* SharePromptView.swift in Sources */,
 				D7898F43ADA2FA812ED3996F /* StorageAnalyzer.swift in Sources */,
 				63E9247FC9BB36361617A63D /* StorageBarChart.swift in Sources */,
 				866D9FAD4C2B4E45294BD44F /* StorageView.swift in Sources */,

@@ -6,6 +6,8 @@ struct PhotosView: View {
     @Environment(SubscriptionManager.self) private var subscriptionManager
     @State private var viewModel = PhotosViewModel()
     @State private var showPaywall = false
+    @State private var showSharePrompt = false
+    @State private var sharePromptManager = SharePromptManager()
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -46,7 +48,23 @@ struct PhotosView: View {
                 UndoToastView(
                     itemCount: viewModel.lastDeletedCount,
                     onUndo: { viewModel.undoDelete() },
-                    onDismiss: { viewModel.showUndoToast = false }
+                    onDismiss: {
+                        viewModel.showUndoToast = false
+                        if sharePromptManager.shouldShowPrompt(dataManager: dataManager) {
+                            withAnimation { showSharePrompt = true }
+                            sharePromptManager.recordPromptShown(dataManager: dataManager)
+                        }
+                    }
+                )
+                .padding(.bottom, PCTheme.Spacing.xxl)
+            }
+
+            // Share prompt
+            if showSharePrompt {
+                SharePromptView(
+                    message: SharePromptManager.promptMessage(for: .photoDelete(bytesFreed: viewModel.lastDeletedSize)),
+                    shareText: SharePromptManager.shareMessage(for: .photoDelete(bytesFreed: viewModel.lastDeletedSize)),
+                    onDismiss: { withAnimation { showSharePrompt = false } }
                 )
                 .padding(.bottom, PCTheme.Spacing.xxl)
             }

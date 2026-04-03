@@ -246,7 +246,7 @@ struct PhotosView: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                 Button("Scan Photos") {
-                    viewModel.startScan()
+                    viewModel.startScan(dataManager: dataManager)
                 }
                 .primaryCTAStyle()
             }
@@ -258,13 +258,16 @@ struct PhotosView: View {
     private var scanningState: some View {
         CardView {
             VStack(spacing: PCTheme.Spacing.lg) {
-                ProgressView()
-                    .controlSize(.large)
+                ProgressView(value: viewModel.scanProgress)
+                    .progressViewStyle(.linear)
+                    .tint(Color.pcAccent)
 
-                Text("Scanning your photos...")
+                Text(viewModel.scanStatusMessage.isEmpty
+                     ? "Scanning your photos..."
+                     : viewModel.scanStatusMessage)
                     .typography(.headline)
 
-                Text("This may take a moment.")
+                Text("This may take a moment depending on your library size.")
                     .typography(.subheadline, color: .pcTextSecondary)
             }
             .frame(maxWidth: .infinity)

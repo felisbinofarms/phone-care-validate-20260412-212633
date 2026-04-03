@@ -32,6 +32,9 @@ final class SharePromptManager {
             if let prefs = try dataManager.fetch(UserPreferences.self, fetchLimit: 1).first {
                 prefs.sharePromptLastShownAt = Date()
                 try dataManager.saveContext()
+            } else {
+                let newPrefs = UserPreferences(sharePromptLastShownAt: Date())
+                try dataManager.save(newPrefs)
             }
         } catch {
             // Non-critical — prompt may show again sooner

@@ -2,10 +2,7 @@ import SwiftUI
 
 struct PrivacyView: View {
     @Environment(PermissionManager.self) private var permissionManager
-    @Environment(DataManager.self) private var dataManager
     @State private var viewModel = PrivacyViewModel()
-    @State private var showSharePrompt = false
-    @State private var sharePromptManager = SharePromptManager()
 
     var body: some View {
         ScrollView {
@@ -31,22 +28,8 @@ struct PrivacyView: View {
         .onAppear {
             viewModel.load(permissionManager: permissionManager)
         }
-        .onChange(of: viewModel.privacyScore) { _, newScore in
-            if newScore >= 76 && sharePromptManager.shouldShowPrompt(dataManager: dataManager) {
-                withAnimation { showSharePrompt = true }
-                sharePromptManager.recordPromptShown(dataManager: dataManager)
-            }
-        }
-        .overlay(alignment: .bottom) {
-            if showSharePrompt {
-                SharePromptView(
-                    message: SharePromptManager.promptMessage(for: .privacyAudit),
-                    shareText: SharePromptManager.shareMessage(for: .privacyAudit),
-                    onDismiss: { withAnimation { showSharePrompt = false } }
-                )
-                .padding(.bottom, PCTheme.Spacing.xxl)
-            }
-        }
+        // Privacy share prompt removed — no user-initiated "cleanup win" moment here.
+        // Privacy sharing is handled via CompletionCelebrationView in the Review Privacy guided flow.
     }
 
     // MARK: - Score

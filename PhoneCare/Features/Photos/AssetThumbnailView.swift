@@ -25,7 +25,11 @@ struct AssetThumbnailView: View {
         .clipped()
         .task(id: assetID) {
             image = nil
-            image = await ThumbnailLoader.shared.loadThumbnail(for: assetID)
+            let expectedID = assetID
+            let loaded = await ThumbnailLoader.shared.loadThumbnail(for: expectedID)
+            if expectedID == assetID {
+                image = loaded
+            }
         }
     }
 }

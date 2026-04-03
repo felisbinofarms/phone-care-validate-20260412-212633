@@ -139,8 +139,9 @@ struct CleanPhotosFlow: View {
             }
 
             do {
-                try await PHPhotoLibrary.shared().performChanges {
-                    PHAssetChangeRequest.deleteAssets(assetArray as NSFastEnumeration)
+                let assetsToDelete = assetArray as NSArray
+                try await PHPhotoLibrary.shared().performChanges { @Sendable in
+                    PHAssetChangeRequest.deleteAssets(assetsToDelete)
                 }
                 let deletedCount = assetArray.count
                 let bytesFreed = Int64(deletedCount) * estimatedBytesEach

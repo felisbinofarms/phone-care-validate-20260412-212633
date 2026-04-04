@@ -129,7 +129,7 @@ struct PaywallBottomSheet: View {
                     savingsLabel: viewModel.savingsLabel(for: product),
                     trialLabel: viewModel.trialLabel(for: product),
                     periodLabel: subscriptionManager.periodLabel(for: product),
-                    weeklyEquivalentLabel: viewModel.weeklyEquivalentLabel(for: product),
+                    weeklyEquivalentLabel: product.weeklyEquivalentLabel,
                     onSelect: { viewModel.selectedProduct = product }
                 )
             }
@@ -145,7 +145,7 @@ struct PaywallBottomSheet: View {
                 .foregroundStyle(Color.pcTextSecondary)
                 .accessibilityHidden(true)
 
-            Text("Popular cleaner apps charge $415/year. PhoneCare is $19.99.")
+            Text(viewModel.competitorComparisonLabel())
                 .typography(.footnote, color: .pcTextSecondary)
                 .fixedSize(horizontal: false, vertical: true)
 
@@ -194,7 +194,7 @@ struct PaywallBottomSheet: View {
                             Text(subscriptionManager.periodLabel(for: product).capitalized)
                                 .typography(.subheadline)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                            Text(viewModel.annualCostLabel(for: product) ?? product.displayPrice)
+                            Text(product.annualCostLabel ?? product.displayPrice)
                                 .typography(.subheadline, color: .pcAccent)
                         }
                         .accessibilityElement(children: .combine)

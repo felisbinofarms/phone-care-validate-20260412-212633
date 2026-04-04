@@ -48,7 +48,7 @@ struct PaywallOnboardingView: View {
                             PlanOptionRow(
                                 product: product,
                                 periodLabel: subscriptionManager.periodLabel(for: product),
-                                weeklyEquivalentLabel: weeklyEquivalentLabel(for: product),
+                                weeklyEquivalentLabel: product.weeklyEquivalentLabel,
                                 isSelected: selectedProductID == product.id,
                                 isRecommended: isAnnual(product)
                             ) {
@@ -64,7 +64,7 @@ struct PaywallOnboardingView: View {
                             .font(.footnote)
                             .foregroundStyle(Color.pcTextSecondary)
                             .accessibilityHidden(true)
-                        Text("Popular cleaner apps charge $415/year. PhoneCare is $19.99.")
+                        Text(PaywallPricingContent.comparisonMessage(for: sortedProducts))
                             .typography(.footnote, color: .pcTextSecondary)
                             .fixedSize(horizontal: false, vertical: true)
                         Spacer()
@@ -166,13 +166,6 @@ struct PaywallOnboardingView: View {
 
     private func isAnnual(_ product: Product) -> Bool {
         product.subscription?.subscriptionPeriod.unit == .year
-    }
-
-    private func weeklyEquivalentLabel(for product: Product) -> String? {
-        guard isAnnual(product) else { return nil }
-        let weekly = product.price / 52
-        let formatted = product.priceFormatStyle.format(weekly)
-        return "That's just \(formatted)/week"
     }
 
     private func handlePurchase() async {

@@ -128,32 +128,50 @@ final class PaywallViewModel {
 
     // MARK: - Pricing Framing Helpers
 
-    /// Returns a weekly-rate equivalent string for annual plans only.
-    func weeklyEquivalentLabel(for product: Product) -> String? {
-        guard let subscription = product.subscription,
-              subscription.subscriptionPeriod.unit == .year else {
-            return nil
+    func competitorComparisonLabel() -> String {
+        PaywallPricingContent.comparisonMessage(for: products)
+    }
+}
+
+enum PaywallPricingContent {
+    static let competitorAnnualCostText = "over $400/year"
+
+    static func comparisonMessage(for products: [Product]) -> String {
+        guard let annualPlan = products.first(where: { $0.isAnnualPlan }) else {
+            return "Some phone cleaner apps cost \(competitorAnnualCostText). PhoneCare keeps pricing straightforward."
         }
-        let weeklyPrice = product.price / 52
-        let formatted = weeklyPrice.formatted(product.priceFormatStyle)
+
+        return "Some phone cleaner apps cost \(competitorAnnualCostText). PhoneCare annual plan is \(annualPlan.displayPrice)/year."
+    }
+}
+
+extension Product {
+    var isAnnualPlan: Bool {
+        subscription?.subscriptionPeriod.unit == .year
+    }
+
+    var weeklyEquivalentLabel: String? {
+        guard isAnnualPlan else { return nil }
+        let weeklyPrice = price / 52
+        let formatted = weeklyPrice.formatted(priceFormatStyle)
         return "That's just \(formatted)/week"
     }
 
-    /// Returns the annualised cost label for any plan.
-    func annualCostLabel(for product: Product) -> String? {
-        guard let subscription = product.subscription else { return nil }
+    var annualCostLabel: String? {
+        guard let subscription else { return nil }
         let annualPrice: Decimal
         switch subscription.subscriptionPeriod.unit {
         case .week:
-            annualPrice = product.price * 52
+            annualPrice = price * 52
         case .month:
-            annualPrice = product.price * 12
+            annualPrice = price * 12
         case .year:
-            annualPrice = product.price
+            annualPrice = price
         default:
             return nil
         }
-        let formatted = annualPrice.formatted(product.priceFormatStyle)
+
+        let formatted = annualPrice.formatted(priceFormatStyle)
         return "\(formatted)/year"
     }
 }

@@ -7,8 +7,8 @@ struct ProductCardView: View {
     let savingsLabel: String?
     let trialLabel: String?
     let periodLabel: String
-    var onSelect: (() -> Void)?
     var weeklyEquivalentLabel: String?
+    var onSelect: (() -> Void)?
 
     var body: some View {
         Button {

@@ -8,6 +8,7 @@ import Foundation
 // is merged.
 
 @Suite("PrivacyAuditor — models and scoring")
+@MainActor
 struct PrivacyAuditorTests {
 
     // MARK: - PermissionSummary: isAppropriate
@@ -52,6 +53,11 @@ struct PrivacyAuditorTests {
     @Test("denied summary uses pcTextSecondary color token")
     func summary_denied_color() {
         #expect(makeSummary(.denied).statusColor == "pcTextSecondary")
+    }
+
+    @Test("restricted summary uses pcTextSecondary color token")
+    func summary_restricted_color() {
+        #expect(makeSummary(.restricted).statusColor == "pcTextSecondary")
     }
 
     @Test("notDetermined summary uses pcWarning color token")

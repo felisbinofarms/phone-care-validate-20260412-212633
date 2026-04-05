@@ -108,11 +108,11 @@ struct PhotosViewModelTests {
         #expect(vm.visibleDuplicateGroups(isPremium: false).isEmpty)
     }
 
-    @Test("visibleSimilarGroups returns empty for both premium and free on a fresh instance")
-    func visibleSimilarGroups_emptyBaseline() {
+    @Test("visibleDuplicateGroups remains empty for both premium and free on a fresh instance")
+    func visibleDuplicateGroups_emptyBaseline_duplicateAssertion() {
         let vm = PhotosViewModel()
-        #expect(vm.visibleSimilarGroups(isPremium: true).isEmpty)
-        #expect(vm.visibleSimilarGroups(isPremium: false).isEmpty)
+        #expect(vm.visibleDuplicateGroups(isPremium: true).isEmpty)
+        #expect(vm.visibleDuplicateGroups(isPremium: false).isEmpty)
     }
 
     // MARK: - Category description

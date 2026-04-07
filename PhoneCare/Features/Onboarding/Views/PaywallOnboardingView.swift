@@ -48,6 +48,7 @@ struct PaywallOnboardingView: View {
                             PlanOptionRow(
                                 product: product,
                                 periodLabel: subscriptionManager.periodLabel(for: product),
+                                weeklyEquivalentLabel: product.weeklyEquivalentLabel,
                                 isSelected: selectedProductID == product.id,
                                 isRecommended: isAnnual(product)
                             ) {
@@ -56,6 +57,25 @@ struct PaywallOnboardingView: View {
                         }
                     }
                     .padding(.horizontal, PCTheme.Spacing.md)
+
+                    // Competitor comparison
+                    HStack(spacing: PCTheme.Spacing.sm) {
+                        Image(systemName: "info.circle.fill")
+                            .font(.footnote)
+                            .foregroundStyle(Color.pcTextSecondary)
+                            .accessibilityHidden(true)
+                        Text(PaywallPricingContent.comparisonMessage(for: sortedProducts))
+                            .typography(.footnote, color: .pcTextSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Spacer()
+                    }
+                    .padding(PCTheme.Spacing.sm)
+                    .background(
+                        RoundedRectangle(cornerRadius: PCTheme.Radius.sm)
+                            .fill(Color.pcSurface)
+                    )
+                    .padding(.horizontal, PCTheme.Spacing.md)
+                    .accessibilityElement(children: .combine)
                 }
                 .padding(.horizontal, PCTheme.Spacing.md)
             }
@@ -195,6 +215,7 @@ private struct BenefitRow: View {
 private struct PlanOptionRow: View {
     let product: Product
     let periodLabel: String
+    let weeklyEquivalentLabel: String?
     let isSelected: Bool
     let isRecommended: Bool
     let onTap: () -> Void
@@ -225,8 +246,14 @@ private struct PlanOptionRow: View {
 
                 Spacer()
 
-                Text(product.displayPrice)
-                    .typography(.headline, color: .pcAccent)
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(product.displayPrice)
+                        .typography(.headline, color: .pcAccent)
+                    if let weekly = weeklyEquivalentLabel {
+                        Text(weekly)
+                            .typography(.caption, color: .pcTextSecondary)
+                    }
+                }
             }
             .padding(PCTheme.Spacing.md)
             .background(
@@ -242,7 +269,13 @@ private struct PlanOptionRow: View {
             )
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("\(periodLabel) plan, \(product.displayPrice)")
+        .accessibilityLabel({
+            var label = "\(periodLabel) plan, \(product.displayPrice)"
+            if let weekly = weeklyEquivalentLabel {
+                label += ", \(weekly)"
+            }
+            return label
+        }())
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
         .accessibilityHint(isRecommended ? "Best value" : "")
     }

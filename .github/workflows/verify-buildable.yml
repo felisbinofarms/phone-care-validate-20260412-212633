@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - 'v*'
 
 env:
   TEMP_REPO_PREFIX: phone-care-verify
@@ -159,8 +161,17 @@ jobs:
           set -e
           
           COMMIT_SHORT=$(git rev-parse --short ${{ github.sha }})
-          TAG="build-$(date +%Y%m%d-%H%M%S)-${COMMIT_SHORT}"
-          RELEASE_NAME="Build: $COMMIT_SHORT — $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          
+          # Check if triggered by tag push
+          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            TAG="${{ github.ref_name }}"
+            RELEASE_NAME="PhoneCare $TAG"
+            RELEASE_NOTES="Version $TAG"
+          else
+            TAG="build-$(date +%Y%m%d-%H%M%S)-${COMMIT_SHORT}"
+            RELEASE_NAME="Build: $COMMIT_SHORT — $(date '+%Y-%m-%d %H:%M:%S UTC')"
+            RELEASE_NOTES="Compiled from commit $COMMIT_SHORT"
+          fi
           
           echo "📦 Creating release: $TAG"
           
@@ -168,7 +179,7 @@ jobs:
             build/Release/PhoneCare.ipa \
             --repo ${{ github.repository }} \
             --title "$RELEASE_NAME" \
-            --notes "Compiled from commit $COMMIT_SHORT" \
+            --notes "$RELEASE_NOTES" \
             --latest 2>&1 | tee release-create.log
           
           echo "RELEASE_TAG=$TAG" >> $GITHUB_ENV

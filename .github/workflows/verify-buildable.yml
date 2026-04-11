@@ -115,6 +115,65 @@ jobs:
             exit 1
           fi
 
+      - name: Download IPA from temp repo build
+        if: steps.wait-build.outputs.build_status == 'success'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          TEMP_REPO="${{ steps.create-repo.outputs.repo_name }}"
+          
+          echo "📥 Fetching .ipa from $TEMP_REPO..."
+          
+          # Get latest workflow run from temp repo
+          RUN_ID=$(gh run list --repo "$TEMP_REPO" --json databaseId -q '.[0].databaseId')
+          
+          if [ -z "$RUN_ID" ]; then
+            echo "⚠️  Could not find run ID, skipping .ipa download"
+            exit 0
+          fi
+          
+          # Download artifacts from the run
+          mkdir -p /tmp/ipa-download
+          gh run download "$RUN_ID" \
+            --repo "$TEMP_REPO" \
+            --dir /tmp/ipa-download \
+            --pattern "PhoneCare.ipa" || echo "⚠️  No artifacts found (may be in Release instead)"
+          
+          # Find and move the .ipa
+          if find /tmp/ipa-download -name "*.ipa" -type f | grep -q .; then
+            IPA_FILE=$(find /tmp/ipa-download -name "*.ipa" -type f | head -1)
+            mkdir -p build/Release
+            cp "$IPA_FILE" build/Release/PhoneCare.ipa
+            echo "✅ IPA downloaded: build/Release/PhoneCare.ipa"
+            ls -lh build/Release/PhoneCare.ipa
+          else
+            echo "⚠️  No .ipa artifact found in temp repo"
+          fi
+
+      - name: Create Release in private repo
+        if: steps.wait-build.outputs.build_status == 'success' && hashFiles('build/Release/PhoneCare.ipa') != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          
+          COMMIT_SHORT=$(git rev-parse --short ${{ github.sha }})
+          TAG="build-$(date +%Y%m%d-%H%M%S)-${COMMIT_SHORT}"
+          RELEASE_NAME="Build: $COMMIT_SHORT — $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          
+          echo "📦 Creating release: $TAG"
+          
+          gh release create "$TAG" \
+            build/Release/PhoneCare.ipa \
+            --repo ${{ github.repository }} \
+            --title "$RELEASE_NAME" \
+            --notes "Compiled from commit $COMMIT_SHORT" \
+            --latest 2>&1 | tee release-create.log
+          
+          echo "RELEASE_TAG=$TAG" >> $GITHUB_ENV
+          echo "RELEASE_URL=https://github.com/${{ github.repository }}/releases/tag/$TAG" >> $GITHUB_ENV
+
       - name: Report PR comment (PR verification)
         if: github.event_name == 'pull_request' && always()
         uses: actions/github-script@v7
@@ -123,11 +182,15 @@ jobs:
             const status = "${{ steps.wait-build.outputs.build_status }}";
             const tempRepoUrl = "${{ steps.create-repo.outputs.repo_url }}";
             const buildUrl = "${{ steps.wait-build.outputs.build_url }}";
+            const releaseUrl = "${{ env.RELEASE_URL }}";
             
             let body = '';
             if (status === 'success') {
               body = `✅ **Build Verification Passed**\n\n`;
-              body += `Your code is buildable! Temporary verification repo has been cleaned up.\n\n`;
+              body += `Your code is buildable! \n\n`;
+              if (releaseUrl) {
+                body += `📥 **[Download PhoneCare.ipa](${releaseUrl})** — Test on emulator or dev phone\n\n`;
+              }
               body += `[View Build Details](${buildUrl})`;
             } else if (status === 'timeout') {
               body = `⏱️ **Build Verification Timeout**\n\n`;

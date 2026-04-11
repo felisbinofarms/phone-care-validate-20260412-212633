@@ -34,29 +34,33 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             archive 2>&1 | tee build.log
 
-      - name: Export IPA
-        continue-on-error: true
+      - name: Package .app into unsigned IPA
+        if: success()
         run: |
-          xcodebuild -exportArchive \
-            -archivePath "build/PhoneCare.xcarchive" \
-            -exportOptionsPlist "tools/ExportOptions.plist" \
-            -exportPath "build/Release" \
-            CODE_SIGNING_ALLOWED=NO \
-            2>&1 | tee export.log || echo "⚠️ Export step failed (signing not configured) — archive succeeded"
-          ls -lah build/Release/ 2>/dev/null || echo "No Release dir (expected without signing)"
-
-      - name: Confirm archive success
-        run: |
-          if [ -d "build/PhoneCare.xcarchive" ]; then
-            echo "✅ Archive built successfully — code compiles!"
-            ls -lah build/PhoneCare.xcarchive/
-          else
-            echo "❌ Archive missing!"
+          set -e
+          APP_PATH=$(find build/PhoneCare.xcarchive/Products/Applications -name "*.app" -type d | head -1)
+          if [ -z "$APP_PATH" ]; then
+            echo "❌ .app not found in archive!"
             exit 1
           fi
+          echo "📦 Packaging $APP_PATH into IPA..."
+          mkdir -p Payload
+          cp -r "$APP_PATH" Payload/
+          zip -qr PhoneCare.ipa Payload/
+          rm -rf Payload
+          ls -lh PhoneCare.ipa
+          echo "✅ Unsigned IPA ready for Sideloadly"
+
+      - name: Upload IPA artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: PhoneCare-unsigned
+          path: PhoneCare.ipa
+          retention-days: 30
 
       - name: Upload to TestFlight
-        if: success()
+        if: success() && env.APP_STORE_CONNECT_ISSUER_ID != ''
         env:
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
@@ -83,9 +87,10 @@ jobs:
       - name: Report status
         if: always()
         run: |
-          if [ "${{ job.status }}" = "success" ]; then
+          if [ -f "PhoneCare.ipa" ]; then
+            echo "✅ PhoneCare build PASSED — unsigned IPA ready for Sideloadly"
+          elif [ "${{ job.status }}" = "success" ]; then
             echo "✅ PhoneCare build PASSED"
-            exit 0
           else
             echo "❌ PhoneCare build FAILED"
             exit 1

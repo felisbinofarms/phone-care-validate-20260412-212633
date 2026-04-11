@@ -2,21 +2,21 @@ import SwiftUI
 
 @Observable
 final class AppState {
-    var hasCompletedOnboarding: Bool {
-        get { UserDefaults.standard.bool(forKey: "hasCompletedOnboarding") }
-        set { UserDefaults.standard.set(newValue, forKey: "hasCompletedOnboarding") }
+    var hasCompletedOnboarding: Bool = false {
+        didSet { UserDefaults.standard.set(hasCompletedOnboarding, forKey: "hasCompletedOnboarding") }
     }
 
     var selectedTab: Tab = .home
     var deepLinkTarget: DeepLink?
 
-    var appearanceMode: AppearanceMode {
-        get {
-            AppearanceMode(rawValue: UserDefaults.standard.integer(forKey: "appearanceMode")) ?? .system
-        }
-        set {
-            UserDefaults.standard.set(newValue.rawValue, forKey: "appearanceMode")
-        }
+    var appearanceMode: AppearanceMode = .system {
+        didSet { UserDefaults.standard.set(appearanceMode.rawValue, forKey: "appearanceMode") }
+    }
+
+    init() {
+        self.hasCompletedOnboarding = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding")
+        let rawMode = UserDefaults.standard.integer(forKey: "appearanceMode")
+        self.appearanceMode = AppearanceMode(rawValue: rawMode) ?? .system
     }
 
     var resolvedColorScheme: ColorScheme? {

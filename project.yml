@@ -30,6 +30,7 @@ targets:
     resources:
       - path: PhoneCare/Resources/Assets.xcassets
       - path: PhoneCare/Resources/StoreKit/Products.storekit
+      - path: PhoneCare/Resources/PrivacyInfo.xcprivacy
     settings:
       base:
         INFOPLIST_KEY_UILaunchScreen_Generation: "YES"

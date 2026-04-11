@@ -40,6 +40,7 @@
 		557151E9F19B7882E0A39B0F /* DataModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC37B9E1268B5FA6F1050F9 /* DataModelTests.swift */; };
 		580D2EBF4F57F52DADE19935 /* PhotoScanCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50162EBD28F4204154C51AE5 /* PhotoScanCache.swift */; };
 		5DEAA264857CB9629B6C4508 /* PhoneCareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421BB972C2C149B9AD423DAC /* PhoneCareTests.swift */; };
+		6095E4A22B9F602B5F08911A /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CA6D29BB6AA1B09FA1D25653 /* PrivacyInfo.xcprivacy */; };
 		60C67413867D9856E569A86F /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C917DB0C6FD77868FADFCA /* OnboardingViewModel.swift */; };
 		6168330B7ECBF7F6D0C66D88 /* DataPrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07931E89D3A810B228D2966 /* DataPrivacyView.swift */; };
 		63E9247FC9BB36361617A63D /* StorageBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CC6442587E7304739B64B5 /* StorageBarChart.swift */; };
@@ -220,6 +221,7 @@
 		C372BD5D775C02FF0730556D /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		C628B18D21474CF69B6364AF /* ScanDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDetail.swift; sourceTree = "<group>"; };
 		C9AD06B404CDDD0B5F94AB3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CA6D29BB6AA1B09FA1D25653 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		CBD4AAC2059ACDC726FAF868 /* DuplicateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateGroupView.swift; sourceTree = "<group>"; };
 		D6C917DB0C6FD77868FADFCA /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		DA142B451ABF9EF7009385DD /* BatchDeleteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchDeleteSheet.swift; sourceTree = "<group>"; };
@@ -520,6 +522,7 @@
 			isa = PBXGroup;
 			children = (
 				C9AD06B404CDDD0B5F94AB3D /* Assets.xcassets */,
+				CA6D29BB6AA1B09FA1D25653 /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -723,6 +726,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				950CA81A6CA5C3D334E2B00B /* Assets.xcassets in Resources */,
+				6095E4A22B9F602B5F08911A /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

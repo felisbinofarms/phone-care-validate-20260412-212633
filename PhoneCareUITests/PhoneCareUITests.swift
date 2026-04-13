@@ -1,13 +1,17 @@
 import XCTest
-@testable import PhoneCare
+
+private enum UITestLaunchArguments {
+    static let skipOnboarding = "UITestsSkipOnboarding"
+    static let skipStoreKit = "UITestsSkipStoreKit"
+}
 
 @MainActor
 final class PhoneCareUITests: XCTestCase {
     private func makeApp() -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments += [
-            LaunchArguments.skipOnboardingForUITests,
-            LaunchArguments.skipStoreKitForUITests
+            UITestLaunchArguments.skipOnboarding,
+            UITestLaunchArguments.skipStoreKit
         ]
         return app
     }

@@ -21,7 +21,7 @@ struct StorageCategoryData: Sendable, Identifiable {
 struct StorageAnalysisResult: Sendable {
     let totalBytes: Int64
     let availableBytes: Int64
-    let recoverableBytes: Int64
+    let recoverableBytes: Int64 = 0
     var categories: [StorageCategoryData]
 
     var usedBytes: Int64 { totalBytes - availableBytes }

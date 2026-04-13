@@ -41,9 +41,17 @@ jobs:
           CODE_SIGNING_ALLOWED=NO
     - name: Run tests
       run: |
+        set -eo pipefail
+
+        SIMULATOR_NAME=$(xcrun simctl list devices available | awk -F '[()]' '/iPhone/ {print $1; exit}' | xargs)
+        if [ -z "$SIMULATOR_NAME" ]; then
+          echo "No available iPhone simulator found"
+          exit 1
+        fi
+
         xcodebuild test \
           -project PhoneCare.xcodeproj \
           -scheme PhoneCare \
-          -destination 'generic/platform=iOS Simulator' \
+          -destination "platform=iOS Simulator,name=$SIMULATOR_NAME" \
           -skipPackagePluginValidation \
           CODE_SIGNING_ALLOWED=NO
